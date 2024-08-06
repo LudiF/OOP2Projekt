@@ -34,7 +34,9 @@
             this.labelSpol = new System.Windows.Forms.Label();
             this.labelEmail = new System.Windows.Forms.Label();
             this.buttonRegistracijaPotvrda = new System.Windows.Forms.Button();
+            this.textBoxRegistracijaPotvrda = new System.Windows.Forms.TextBox();
             this.textBoxLozinkaRegistracija = new System.Windows.Forms.TextBox();
+            this.labelPotvrdaLozinke = new System.Windows.Forms.Label();
             this.labelLozinkaReg = new System.Windows.Forms.Label();
             this.textBoxKorisnickoImeRegistracija = new System.Windows.Forms.TextBox();
             this.labelRegistracijaKorisnickoIme = new System.Windows.Forms.Label();
@@ -44,7 +46,7 @@
             // radioButtonZensko
             // 
             this.radioButtonZensko.AutoSize = true;
-            this.radioButtonZensko.Location = new System.Drawing.Point(422, 265);
+            this.radioButtonZensko.Location = new System.Drawing.Point(422, 318);
             this.radioButtonZensko.Name = "radioButtonZensko";
             this.radioButtonZensko.Size = new System.Drawing.Size(61, 17);
             this.radioButtonZensko.TabIndex = 28;
@@ -55,7 +57,7 @@
             // radioButtonMusko
             // 
             this.radioButtonMusko.AutoSize = true;
-            this.radioButtonMusko.Location = new System.Drawing.Point(339, 265);
+            this.radioButtonMusko.Location = new System.Drawing.Point(339, 318);
             this.radioButtonMusko.Name = "radioButtonMusko";
             this.radioButtonMusko.Size = new System.Drawing.Size(57, 17);
             this.radioButtonMusko.TabIndex = 24;
@@ -66,7 +68,7 @@
             // textBoxEmailRegistracija
             // 
             this.textBoxEmailRegistracija.ForeColor = System.Drawing.SystemColors.GrayText;
-            this.textBoxEmailRegistracija.Location = new System.Drawing.Point(289, 228);
+            this.textBoxEmailRegistracija.Location = new System.Drawing.Point(289, 281);
             this.textBoxEmailRegistracija.Name = "textBoxEmailRegistracija";
             this.textBoxEmailRegistracija.Size = new System.Drawing.Size(194, 20);
             this.textBoxEmailRegistracija.TabIndex = 23;
@@ -74,7 +76,7 @@
             // labelSpol
             // 
             this.labelSpol.AutoSize = true;
-            this.labelSpol.Location = new System.Drawing.Point(286, 267);
+            this.labelSpol.Location = new System.Drawing.Point(286, 320);
             this.labelSpol.Name = "labelSpol";
             this.labelSpol.Size = new System.Drawing.Size(31, 13);
             this.labelSpol.TabIndex = 26;
@@ -83,7 +85,7 @@
             // labelEmail
             // 
             this.labelEmail.AutoSize = true;
-            this.labelEmail.Location = new System.Drawing.Point(286, 212);
+            this.labelEmail.Location = new System.Drawing.Point(286, 265);
             this.labelEmail.Name = "labelEmail";
             this.labelEmail.Size = new System.Drawing.Size(34, 13);
             this.labelEmail.TabIndex = 25;
@@ -92,13 +94,20 @@
             // 
             // buttonRegistracijaPotvrda
             // 
-            this.buttonRegistracijaPotvrda.Location = new System.Drawing.Point(289, 305);
+            this.buttonRegistracijaPotvrda.Location = new System.Drawing.Point(289, 358);
             this.buttonRegistracijaPotvrda.Name = "buttonRegistracijaPotvrda";
             this.buttonRegistracijaPotvrda.Size = new System.Drawing.Size(194, 23);
             this.buttonRegistracijaPotvrda.TabIndex = 27;
             this.buttonRegistracijaPotvrda.Text = "Registriraj se";
             this.buttonRegistracijaPotvrda.UseVisualStyleBackColor = true;
-            this.buttonRegistracijaPotvrda.Click += new System.EventHandler(this.buttonRegistracijaPotvrda_Click);
+            // 
+            // textBoxRegistracijaPotvrda
+            // 
+            this.textBoxRegistracijaPotvrda.ForeColor = System.Drawing.SystemColors.GrayText;
+            this.textBoxRegistracijaPotvrda.Location = new System.Drawing.Point(289, 232);
+            this.textBoxRegistracijaPotvrda.Name = "textBoxRegistracijaPotvrda";
+            this.textBoxRegistracijaPotvrda.Size = new System.Drawing.Size(194, 20);
+            this.textBoxRegistracijaPotvrda.TabIndex = 22;
             // 
             // textBoxLozinkaRegistracija
             // 
@@ -107,6 +116,15 @@
             this.textBoxLozinkaRegistracija.Name = "textBoxLozinkaRegistracija";
             this.textBoxLozinkaRegistracija.Size = new System.Drawing.Size(194, 20);
             this.textBoxLozinkaRegistracija.TabIndex = 21;
+            // 
+            // labelPotvrdaLozinke
+            // 
+            this.labelPotvrdaLozinke.AutoSize = true;
+            this.labelPotvrdaLozinke.Location = new System.Drawing.Point(286, 216);
+            this.labelPotvrdaLozinke.Name = "labelPotvrdaLozinke";
+            this.labelPotvrdaLozinke.Size = new System.Drawing.Size(76, 13);
+            this.labelPotvrdaLozinke.TabIndex = 20;
+            this.labelPotvrdaLozinke.Text = "Potvrdi lozinku";
             // 
             // labelLozinkaReg
             // 
@@ -155,7 +173,9 @@
             this.Controls.Add(this.labelSpol);
             this.Controls.Add(this.labelEmail);
             this.Controls.Add(this.buttonRegistracijaPotvrda);
+            this.Controls.Add(this.textBoxRegistracijaPotvrda);
             this.Controls.Add(this.textBoxLozinkaRegistracija);
+            this.Controls.Add(this.labelPotvrdaLozinke);
             this.Controls.Add(this.labelLozinkaReg);
             this.Controls.Add(this.textBoxKorisnickoImeRegistracija);
             this.Controls.Add(this.labelRegistracijaKorisnickoIme);
@@ -175,7 +195,9 @@
         private System.Windows.Forms.Label labelSpol;
         private System.Windows.Forms.Label labelEmail;
         private System.Windows.Forms.Button buttonRegistracijaPotvrda;
+        private System.Windows.Forms.TextBox textBoxRegistracijaPotvrda;
         private System.Windows.Forms.TextBox textBoxLozinkaRegistracija;
+        private System.Windows.Forms.Label labelPotvrdaLozinke;
         private System.Windows.Forms.Label labelLozinkaReg;
         private System.Windows.Forms.TextBox textBoxKorisnickoImeRegistracija;
         private System.Windows.Forms.Label labelRegistracijaKorisnickoIme;

@@ -10,21 +10,11 @@ using System.Windows.Forms;
 
 namespace OOP2Projekt
 {
-    public partial class LoginForma : Form
+    public partial class RegistracijskaForma : Form
     {
-        public LoginForma()
+        public RegistracijskaForma()
         {
             InitializeComponent();
-        }
-
-        private void buttonPrijava_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void buttonRegistracija_Click(object sender, EventArgs e)
-        {
-
         }
     }
 }

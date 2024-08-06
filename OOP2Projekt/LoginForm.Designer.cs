@@ -132,7 +132,7 @@
             this.Controls.Add(this.labelKorisnickoIme);
             this.Controls.Add(this.labelDobrodosli);
             this.Name = "LoginForma";
-            this.Text = "Login";
+            this.Text = "Prijava";
             this.ResumeLayout(false);
             this.PerformLayout();
 
