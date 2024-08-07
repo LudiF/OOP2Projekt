@@ -100,6 +100,8 @@
     <EmbeddedResource Include="RegistracijskaForma.resx">
       <DependentUpon>RegistracijskaForma.cs</DependentUpon>
     </EmbeddedResource>
+	  <EmbeddedResource Include="Resources.resx" />
+  <EmbeddedResource Include="Resources.hr.resx" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

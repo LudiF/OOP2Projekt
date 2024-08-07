@@ -1,6 +1,6 @@
 ﻿namespace OOP2Projekt
 {
-    partial class LoginForma
+    partial class LoginForm
     {
         /// <summary>
         /// Required designer variable.
@@ -34,8 +34,9 @@
             this.labelLozinka = new System.Windows.Forms.Label();
             this.textBoxLozinka = new System.Windows.Forms.TextBox();
             this.buttonRegistracija = new System.Windows.Forms.Button();
-            this.linkLabelLozinka = new System.Windows.Forms.LinkLabel();
             this.buttonPrijava = new System.Windows.Forms.Button();
+            this.linkLabelLozinka = new System.Windows.Forms.LinkLabel();
+            this.comboBoxLanguage = new System.Windows.Forms.ComboBox();
             this.SuspendLayout();
             // 
             // labelDobrodosli
@@ -54,9 +55,9 @@
             this.labelKorisnickoIme.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.labelKorisnickoIme.Location = new System.Drawing.Point(320, 149);
             this.labelKorisnickoIme.Name = "labelKorisnickoIme";
-            this.labelKorisnickoIme.Size = new System.Drawing.Size(97, 16);
+            this.labelKorisnickoIme.Size = new System.Drawing.Size(70, 16);
             this.labelKorisnickoIme.TabIndex = 8;
-            this.labelKorisnickoIme.Text = "Korisnicko ime:";
+            this.labelKorisnickoIme.Text = "Username";
             // 
             // textBoxKorisnickoIme
             // 
@@ -65,7 +66,6 @@
             this.textBoxKorisnickoIme.Name = "textBoxKorisnickoIme";
             this.textBoxKorisnickoIme.Size = new System.Drawing.Size(188, 20);
             this.textBoxKorisnickoIme.TabIndex = 9;
-            this.textBoxKorisnickoIme.TextChanged += new System.EventHandler(this.textBoxKorisnickoIme_TextChanged);
             // 
             // labelLozinka
             // 
@@ -73,9 +73,9 @@
             this.labelLozinka.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.labelLozinka.Location = new System.Drawing.Point(320, 220);
             this.labelLozinka.Name = "labelLozinka";
-            this.labelLozinka.Size = new System.Drawing.Size(56, 16);
+            this.labelLozinka.Size = new System.Drawing.Size(67, 16);
             this.labelLozinka.TabIndex = 10;
-            this.labelLozinka.Text = "Lozinka:";
+            this.labelLozinka.Text = "Password";
             // 
             // textBoxLozinka
             // 
@@ -91,20 +91,9 @@
             this.buttonRegistracija.Name = "buttonRegistracija";
             this.buttonRegistracija.Size = new System.Drawing.Size(188, 23);
             this.buttonRegistracija.TabIndex = 14;
-            this.buttonRegistracija.Text = "Registracija";
+            this.buttonRegistracija.Text = "Register";
             this.buttonRegistracija.UseVisualStyleBackColor = true;
             this.buttonRegistracija.Click += new System.EventHandler(this.buttonRegistracija_Click);
-            // 
-            // linkLabelLozinka
-            // 
-            this.linkLabelLozinka.AutoSize = true;
-            this.linkLabelLozinka.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.linkLabelLozinka.Location = new System.Drawing.Point(399, 276);
-            this.linkLabelLozinka.Name = "linkLabelLozinka";
-            this.linkLabelLozinka.Size = new System.Drawing.Size(112, 13);
-            this.linkLabelLozinka.TabIndex = 13;
-            this.linkLabelLozinka.TabStop = true;
-            this.linkLabelLozinka.Text = "Zaboravili ste lozinku?";
             // 
             // buttonPrijava
             // 
@@ -113,15 +102,39 @@
             this.buttonPrijava.Name = "buttonPrijava";
             this.buttonPrijava.Size = new System.Drawing.Size(188, 23);
             this.buttonPrijava.TabIndex = 12;
-            this.buttonPrijava.Text = "Prijavi se";
+            this.buttonPrijava.Text = "Log in";
             this.buttonPrijava.UseVisualStyleBackColor = true;
             this.buttonPrijava.Click += new System.EventHandler(this.buttonPrijava_Click);
             // 
-            // LoginForma
+            // linkLabelLozinka
+            // 
+            this.linkLabelLozinka.AutoSize = true;
+            this.linkLabelLozinka.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.linkLabelLozinka.Location = new System.Drawing.Point(420, 282);
+            this.linkLabelLozinka.Name = "linkLabelLozinka";
+            this.linkLabelLozinka.Size = new System.Drawing.Size(91, 13);
+            this.linkLabelLozinka.TabIndex = 13;
+            this.linkLabelLozinka.TabStop = true;
+            this.linkLabelLozinka.Text = "Forgot password?";
+            // 
+            // comboBoxLanguage
+            // 
+            this.comboBoxLanguage.FormattingEnabled = true;
+            this.comboBoxLanguage.Items.AddRange(new object[] {
+            "Hrvatski",
+            "English"});
+            this.comboBoxLanguage.Location = new System.Drawing.Point(667, 40);
+            this.comboBoxLanguage.Name = "comboBoxLanguage";
+            this.comboBoxLanguage.Size = new System.Drawing.Size(121, 21);
+            this.comboBoxLanguage.TabIndex = 30;
+            this.comboBoxLanguage.SelectedIndexChanged += new System.EventHandler(this.comboBoxLanguage_SelectedIndexChanged_1);
+            // 
+            // LoginForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.comboBoxLanguage);
             this.Controls.Add(this.buttonRegistracija);
             this.Controls.Add(this.linkLabelLozinka);
             this.Controls.Add(this.buttonPrijava);
@@ -130,9 +143,8 @@
             this.Controls.Add(this.textBoxKorisnickoIme);
             this.Controls.Add(this.labelKorisnickoIme);
             this.Controls.Add(this.labelDobrodosli);
-            this.Name = "LoginForma";
+            this.Name = "LoginForm";
             this.Text = "Prijava";
-            this.Load += new System.EventHandler(this.LoginForma_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -146,8 +158,9 @@
         private System.Windows.Forms.Label labelLozinka;
         private System.Windows.Forms.TextBox textBoxLozinka;
         private System.Windows.Forms.Button buttonRegistracija;
-        private System.Windows.Forms.LinkLabel linkLabelLozinka;
         private System.Windows.Forms.Button buttonPrijava;
+        private System.Windows.Forms.LinkLabel linkLabelLozinka;
+        private System.Windows.Forms.ComboBox comboBoxLanguage;
     }
 }
 

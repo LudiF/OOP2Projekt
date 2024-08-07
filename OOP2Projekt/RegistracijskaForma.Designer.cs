@@ -39,6 +39,7 @@
             this.textBoxKorisnickoImeRegistracija = new System.Windows.Forms.TextBox();
             this.labelRegistracijaKorisnickoIme = new System.Windows.Forms.Label();
             this.labelRegistracijaPozdrav = new System.Windows.Forms.Label();
+            this.comboBoxLanguage = new System.Windows.Forms.ComboBox();
             this.SuspendLayout();
             // 
             // radioButtonZensko
@@ -144,11 +145,24 @@
             this.labelRegistracijaPozdrav.TabIndex = 16;
             this.labelRegistracijaPozdrav.Text = "Registriraj se i započni pratiti svoje vježbe!";
             // 
+            // comboBoxLanguage
+            // 
+            this.comboBoxLanguage.FormattingEnabled = true;
+            this.comboBoxLanguage.Items.AddRange(new object[] {
+            "Hrvatski",
+            "English"});
+            this.comboBoxLanguage.Location = new System.Drawing.Point(667, 43);
+            this.comboBoxLanguage.Name = "comboBoxLanguage";
+            this.comboBoxLanguage.Size = new System.Drawing.Size(121, 21);
+            this.comboBoxLanguage.TabIndex = 29;
+            this.comboBoxLanguage.SelectedIndexChanged += new System.EventHandler(this.comboBoxLanguage_SelectedIndexChanged);
+            // 
             // RegistracijskaForma
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.comboBoxLanguage);
             this.Controls.Add(this.radioButtonZensko);
             this.Controls.Add(this.radioButtonMusko);
             this.Controls.Add(this.textBoxEmailRegistracija);
@@ -162,7 +176,6 @@
             this.Controls.Add(this.labelRegistracijaPozdrav);
             this.Name = "RegistracijskaForma";
             this.Text = "Registracija";
-            this.Load += new System.EventHandler(this.RegistracijskaForma_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -181,5 +194,6 @@
         private System.Windows.Forms.TextBox textBoxKorisnickoImeRegistracija;
         private System.Windows.Forms.Label labelRegistracijaKorisnickoIme;
         private System.Windows.Forms.Label labelRegistracijaPozdrav;
+        private System.Windows.Forms.ComboBox comboBoxLanguage;
     }
 }

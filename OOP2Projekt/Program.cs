@@ -16,7 +16,7 @@ namespace OOP2Projekt
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new LoginForma());
+            Application.Run(new LoginForm());
         }
     }
 }

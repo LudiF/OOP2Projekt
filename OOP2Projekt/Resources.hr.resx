@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <!-- Add your resources here -->
+  <data name="RegistracijskaForma" xml:space="preserve">
+    <value>Registracijska forma</value>
+  </data>
+  <data name="WelcomeMessage" xml:space="preserve">
+    <value>Registrirajte se i pratite svoje vježbe!</value>
+  </data>
+  <data name="RegisterButton" xml:space="preserve">
+    <value>Registriraj se</value>
+  </data>
+  <data name="LabelUsername" xml:space="preserve">
+    <value>Korisničko ime</value>
+  </data>
+  <data name="LabelPassword" xml:space="preserve">
+    <value>Lozinka</value>
+  </data>
+  <data name="LabelGender" xml:space="preserve">
+    <value>Spol</value>
+  </data>
+  <data name="LabelMale" xml:space="preserve">
+    <value>Muško</value>
+  </data>
+  <data name="LabelFemale" xml:space="preserve">
+    <value>Žensko</value>
+  </data>
+  <data name="ButtonLogin" xml:space="preserve">
+    <value>Prijavi se</value>
+  </data>
+  <data name="ButtonRegister" xml:space="preserve">
+    <value>Registriraj se</value>
+  </data>
+  <data name="LabelPassword" xml:space="preserve">
+    <value>Zaboravili ste lozinku</value>
+  </data>
+</root>

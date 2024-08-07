@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <!-- Add your resources here -->
+  <data name="RegistracijskaForma" xml:space="preserve">
+    <value>Registration Form</value>
+  </data>
+  <data name="WelcomeMessage" xml:space="preserve">
+    <value>Register and start tracking your workout!</value>
+  </data>
+  <data name="RegisterButton" xml:space="preserve">
+    <value>Register</value>
+  </data>
+  <data name="LabelUsername" xml:space="preserve">
+    <value>Username</value>
+  </data>
+  <data name="LabelPassword" xml:space="preserve">
+    <value>Password</value>
+  </data>
+  <data name="LabelGender" xml:space="preserve">
+    <value>Gender</value>
+  </data>
+  <data name="LabelMale" xml:space="preserve">
+    <value>Male</value>
+  </data>
+  <data name="LabelFemale" xml:space="preserve">
+    <value>Female</value>
+  </data>
+  <data name="ButtonLogin" xml:space="preserve">
+    <value>Log in</value>
+  </data>
+  <data name="ButtonRegister" xml:space="preserve">
+    <value>Register</value>
+  </data>
+  <data name="LabelPassword" xml:space="preserve">
+    <value>Forgot password?</value>
+  </data>
+</root>
