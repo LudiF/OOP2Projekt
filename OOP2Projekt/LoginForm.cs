@@ -26,5 +26,15 @@ namespace OOP2Projekt
             RegistracijskaForma registrationForm = new RegistracijskaForma();
             registrationForm.Show();
         }
+
+        private void textBoxKorisnickoIme_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void LoginForma_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }

@@ -162,6 +162,7 @@
             this.Controls.Add(this.labelRegistracijaPozdrav);
             this.Name = "RegistracijskaForma";
             this.Text = "Registracija";
+            this.Load += new System.EventHandler(this.RegistracijskaForma_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

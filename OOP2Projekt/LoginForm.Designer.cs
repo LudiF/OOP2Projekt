@@ -65,7 +65,7 @@
             this.textBoxKorisnickoIme.Name = "textBoxKorisnickoIme";
             this.textBoxKorisnickoIme.Size = new System.Drawing.Size(188, 20);
             this.textBoxKorisnickoIme.TabIndex = 9;
-            this.textBoxKorisnickoIme.Text = "Unesite korisnicko ime";
+            this.textBoxKorisnickoIme.TextChanged += new System.EventHandler(this.textBoxKorisnickoIme_TextChanged);
             // 
             // labelLozinka
             // 
@@ -84,7 +84,6 @@
             this.textBoxLozinka.Name = "textBoxLozinka";
             this.textBoxLozinka.Size = new System.Drawing.Size(188, 20);
             this.textBoxLozinka.TabIndex = 11;
-            this.textBoxLozinka.Text = "Unesite lozinku";
             // 
             // buttonRegistracija
             // 
@@ -133,6 +132,7 @@
             this.Controls.Add(this.labelDobrodosli);
             this.Name = "LoginForma";
             this.Text = "Prijava";
+            this.Load += new System.EventHandler(this.LoginForma_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

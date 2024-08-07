@@ -8,11 +8,19 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Text.RegularExpressions;
+using System.Drawing.Text;
 
 namespace OOP2Projekt
 {
     public partial class RegistracijskaForma : Form
     {
+        private bool IsValidEmail(string email)
+        {
+            string pattern = @"^[^@\s]+@[^@\s]+\.[^@\s]+$";
+            return Regex.IsMatch(email, pattern);
+        }
+
         public RegistracijskaForma()
         {
             InitializeComponent();
@@ -28,6 +36,12 @@ namespace OOP2Projekt
             if (string.IsNullOrEmpty(username) || string.IsNullOrEmpty(password) || string.IsNullOrEmpty(email))
             {
                 MessageBox.Show("All fields are required");
+                return;
+            }
+
+            if (!IsValidEmail(email))
+            {
+                MessageBox.Show("Invalid email format");
                 return;
             }
 
@@ -53,6 +67,11 @@ namespace OOP2Projekt
             {
                 MessageBox.Show("An error occurred: " + ex.Message);
             }
+        }
+
+        private void RegistracijskaForma_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }
