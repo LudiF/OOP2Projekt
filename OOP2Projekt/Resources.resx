@@ -46,4 +46,7 @@
   <data name="LabelPassword" xml:space="preserve">
     <value>Forgot password?</value>
   </data>
+  <data name="LabelDobrodosli" xml:space="preserve">
+    <value>Welcome!</value>
+  </data>
 </root>

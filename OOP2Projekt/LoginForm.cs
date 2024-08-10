@@ -35,6 +35,7 @@ namespace OOP2Projekt
             buttonPrijava.Text = resManager.GetString("ButtonLogin", cultureInfo);
             buttonRegistracija.Text = resManager.GetString("ButtonRegister", cultureInfo);
             linkLabelLozinka.Text = resManager.GetString("LabelPassword", cultureInfo);
+            labelDobrodosli.Text = resManager.GetString("LabelDobrodosli", cultureInfo);
             // Add other UI elements here
         }
 
