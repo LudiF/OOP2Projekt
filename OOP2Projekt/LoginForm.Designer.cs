@@ -43,11 +43,11 @@
             // 
             this.labelDobrodosli.AutoSize = true;
             this.labelDobrodosli.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelDobrodosli.Location = new System.Drawing.Point(317, 63);
+            this.labelDobrodosli.Location = new System.Drawing.Point(343, 61);
             this.labelDobrodosli.Name = "labelDobrodosli";
-            this.labelDobrodosli.Size = new System.Drawing.Size(159, 31);
+            this.labelDobrodosli.Size = new System.Drawing.Size(134, 31);
             this.labelDobrodosli.TabIndex = 7;
-            this.labelDobrodosli.Text = "Dobrodošli! ";
+            this.labelDobrodosli.Text = "Welcome!";
             // 
             // labelKorisnickoIme
             // 
@@ -127,7 +127,7 @@
             this.comboBoxLanguage.Name = "comboBoxLanguage";
             this.comboBoxLanguage.Size = new System.Drawing.Size(121, 21);
             this.comboBoxLanguage.TabIndex = 30;
-            this.comboBoxLanguage.SelectedIndexChanged += new System.EventHandler(this.comboBoxLanguage_SelectedIndexChanged_1);
+            this.comboBoxLanguage.SelectedIndexChanged += new System.EventHandler(this.comboBoxLanguage_SelectedIndexChanged);
             // 
             // LoginForm
             // 

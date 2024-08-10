@@ -1,4 +1,5 @@
 ﻿using System;
+using OOP2Projekt;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -13,18 +14,29 @@ using System.Windows.Forms;
 
 namespace OOP2Projekt
 {
-    public partial class LoginForm : Form
+    public partial class LoginForm : Form, ILocalizable
     {
         ResourceManager resManager;
         CultureInfo cultureInfo;
+
         public LoginForm()
         {
             InitializeComponent();
-            SetLanguage("en");
+            comboBoxLanguage.SelectedItem = LanguageSettings.CurrentLanguage == "hr" ? "Hrvatski" : "English";
+
+            LanguageSettings.OnLanguageChanged += LanguageChangedHandler;
+            SetLanguage(LanguageSettings.CurrentLanguage);
         }
 
-        private void SetLanguage(string langCode)
+        private void LanguageChangedHandler(object sender, EventArgs e)
         {
+            SetLanguage(LanguageSettings.CurrentLanguage); // Ažuriraj jezik kad se događaj pokrene
+        }
+
+        public void SetLanguage(string langCode) // Promijenite u public
+        {
+            LanguageSettings.CurrentLanguage = langCode;
+
             cultureInfo = CultureInfo.CreateSpecificCulture(langCode);
             resManager = new ResourceManager("OOP2Projekt.Resources", typeof(LoginForm).Assembly);
 
@@ -37,10 +49,13 @@ namespace OOP2Projekt
             linkLabelLozinka.Text = resManager.GetString("LabelPassword", cultureInfo);
             labelDobrodosli.Text = resManager.GetString("LabelDobrodosli", cultureInfo);
             // Add other UI elements here
+
+            comboBoxLanguage.SelectedItem = langCode == "hr" ? "Hrvatski" : "English";
         }
 
         private void buttonPrijava_Click(object sender, EventArgs e)
         {
+            // Logika za prijavu korisnika
         }
 
         private void buttonRegistracija_Click(object sender, EventArgs e)
@@ -48,21 +63,22 @@ namespace OOP2Projekt
             RegistracijskaForma registrationForm = new RegistracijskaForma();
             registrationForm.Show();
         }
-        private void SwitchLanguage(string langCode)
+
+        private void comboBoxLanguage_SelectedIndexChanged(object sender, EventArgs e)
         {
-            SetLanguage(langCode);
+            string selectedLanguage = comboBoxLanguage.SelectedItem.ToString() == "Hrvatski" ? "hr" : "en";
+            LanguageSettings.CurrentLanguage = selectedLanguage;
+
+            // Neposredno primijenite promjenu jezika
+            SetLanguage(selectedLanguage);
         }
-        private void comboBoxLanguage_SelectedIndexChanged_1(object sender, EventArgs e)
+
+        protected override void OnFormClosed(FormClosedEventArgs e)
         {
-            string selectedLanguage = comboBoxLanguage.SelectedItem.ToString();
-            if (selectedLanguage == "Hrvatski")
-            {
-                SwitchLanguage("hr");
-            }
-            else if (selectedLanguage == "English")
-            {
-                SwitchLanguage("en");
-            }
+            // Odjavite se s događaja kada se forma zatvori da biste izbjegli memory leak
+            LanguageSettings.OnLanguageChanged -= LanguageChangedHandler;
+            base.OnFormClosed(e);
         }
     }
+
 }

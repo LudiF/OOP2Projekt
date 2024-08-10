@@ -1,4 +1,5 @@
 ﻿using System;
+using OOP2Projekt;
 using System.Globalization;
 using System.Resources;
 using System.Threading;
@@ -24,7 +25,12 @@ namespace OOP2Projekt
         public RegistracijskaForma()
         {
             InitializeComponent();
-            SetLanguage("en");
+            LanguageSettings.OnLanguageChanged += LanguageChangedHandler; // Pretplata na događaj
+            SetLanguage(LanguageSettings.CurrentLanguage);
+        }
+        private void LanguageChangedHandler(object sender, EventArgs e)
+        {
+            SetLanguage(LanguageSettings.CurrentLanguage); // Ažuriraj jezik kad se događaj pokrene
         }
 
         private void SetLanguage(string langCode)
@@ -41,6 +47,14 @@ namespace OOP2Projekt
             radioButtonMusko.Text = resManager.GetString("LabelMale", cultureInfo);
             radioButtonZensko.Text = resManager.GetString("LabelFemale", cultureInfo);
             //Ostali UI elementi ispod ove linije
+
+            comboBoxLanguage.SelectedItem = langCode == "hr" ? "Hrvatski" : "English";
+        }
+        protected override void OnFormClosed(FormClosedEventArgs e)
+        {
+            // Odjavite se s događaja kada se forma zatvori
+            LanguageSettings.OnLanguageChanged -= LanguageChangedHandler;
+            base.OnFormClosed(e);
         }
 
         private bool IsValidEmail(string email)
@@ -121,15 +135,10 @@ namespace OOP2Projekt
 
         private void comboBoxLanguage_SelectedIndexChanged(object sender, EventArgs e)
         {
-            string selectedLanguage = comboBoxLanguage.SelectedItem.ToString();
-            if (selectedLanguage == "Hrvatski")
-            {
-                SwitchLanguage("hr");
-            }
-            else if (selectedLanguage == "English")
-            {
-                SwitchLanguage("en");
-            }
+            string selectedLanguage = comboBoxLanguage.SelectedItem.ToString() == "Hrvatski" ? "hr" : "en";
+            LanguageSettings.CurrentLanguage = selectedLanguage;
+            SetLanguage(selectedLanguage); // Odmah primijenite promjenu jezika
         }
+
     }
 }

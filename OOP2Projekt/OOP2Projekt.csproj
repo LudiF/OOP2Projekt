@@ -65,6 +65,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ILocalizable.cs" />
+    <Compile Include="LanguageSettings.cs" />
     <Compile Include="LoginForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -85,6 +87,9 @@
     <Compile Include="RegistracijskaForma.Designer.cs">
       <DependentUpon>RegistracijskaForma.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="GlavnaForma.resx">
+      <DependentUpon>GlavnaForma.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="LoginForm.resx">
       <DependentUpon>LoginForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -100,8 +105,8 @@
     <EmbeddedResource Include="RegistracijskaForma.resx">
       <DependentUpon>RegistracijskaForma.cs</DependentUpon>
     </EmbeddedResource>
-	  <EmbeddedResource Include="Resources.resx" />
-  <EmbeddedResource Include="Resources.hr.resx" />
+    <EmbeddedResource Include="Resources.resx" />
+    <EmbeddedResource Include="Resources.hr.resx" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
