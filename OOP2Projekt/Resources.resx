@@ -43,10 +43,14 @@
   <data name="ButtonRegister" xml:space="preserve">
     <value>Register</value>
   </data>
-  <data name="LabelPassword" xml:space="preserve">
+  <data name="LabelForgotPassword" xml:space="preserve">
     <value>Forgot password?</value>
   </data>
   <data name="LabelDobrodosli" xml:space="preserve">
     <value>Welcome!</value>
   </data>
+    <data name="RegistrationSuccessful" xml:space="preserve">
+    <value>Registration successful!</value>
+  </data>
+	
 </root>

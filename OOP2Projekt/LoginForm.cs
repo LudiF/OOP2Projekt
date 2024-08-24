@@ -1,4 +1,5 @@
 ﻿using System;
+using BCrypt.Net;
 using OOP2Projekt;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -11,6 +12,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Data.SQLite;
 
 namespace OOP2Projekt
 {
@@ -46,7 +48,7 @@ namespace OOP2Projekt
             labelLozinka.Text = resManager.GetString("LabelPassword", cultureInfo);
             buttonPrijava.Text = resManager.GetString("ButtonLogin", cultureInfo);
             buttonRegistracija.Text = resManager.GetString("ButtonRegister", cultureInfo);
-            linkLabelLozinka.Text = resManager.GetString("LabelPassword", cultureInfo);
+            linkLabelLozinka.Text = resManager.GetString("LabelForgotPassword", cultureInfo);
             labelDobrodosli.Text = resManager.GetString("LabelDobrodosli", cultureInfo);
             // Add other UI elements here
 
@@ -55,7 +57,40 @@ namespace OOP2Projekt
 
         private void buttonPrijava_Click(object sender, EventArgs e)
         {
-            // Logika za prijavu korisnika
+            string username = textBoxKorisnickoIme.Text;
+            string password = textBoxLozinka.Text;
+
+            string pepper = "mojPapar";
+            string saltedPassword = password + pepper;
+
+            try
+            {
+                using (SQLiteConnection connection = new SQLiteConnection(@"Data Source=E:\BazaOOP2\KorisniciPrograma.db;Version=3;"))
+                {
+                    connection.Open();
+                    string query = "SELECT Password FROM Korisnici WHERE Username = @Username";
+                    using(SQLiteCommand command = new SQLiteCommand(query, connection))
+                    {
+                        command.Parameters.AddWithValue("@Username", username);
+                        string storedHashedPassword = command.ExecuteScalar() as string;
+
+                        if (storedHashedPassword != null &&  BCrypt.Net.BCrypt.Verify(saltedPassword, storedHashedPassword))
+                        {
+                            MessageBox.Show("Prijava uspješna!");
+                            //nastavak prijave
+                        }
+                        else
+                        {
+                            MessageBox.Show("Pogrešno korisničko ime ili lozinka.");
+                        }
+                    }
+                    connection.Close();
+                }
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show(resManager.GetString("ErrorOccured", cultureInfo) + ": " + ex.Message);
+            }
         }
 
         private void buttonRegistracija_Click(object sender, EventArgs e)

@@ -1,4 +1,5 @@
 ﻿using System;
+using BCrypt.Net;
 using OOP2Projekt;
 using System.Globalization;
 using System.Resources;
@@ -107,6 +108,10 @@ namespace OOP2Projekt
 
             try
             {
+                string pepper = "mojPapar";
+                string saltedPassword = password + pepper;
+                string hashedPassword = BCrypt.Net.BCrypt.HashPassword(saltedPassword);
+
                 using (SQLiteConnection connection = new SQLiteConnection(@"Data Source=E:\BazaOOP2\KorisniciPrograma.db;Version=3;"))
                 {
                     connection.Open();
@@ -114,7 +119,7 @@ namespace OOP2Projekt
                     using (SQLiteCommand command = new SQLiteCommand(query, connection))
                     {
                         command.Parameters.AddWithValue("@Username", username);
-                        command.Parameters.AddWithValue("@Password", password);
+                        command.Parameters.AddWithValue("@Password", hashedPassword);
                         command.Parameters.AddWithValue("@Email", email);
                         command.Parameters.AddWithValue("@Gender", gender);
                         command.ExecuteNonQuery();
