@@ -1,6 +1,7 @@
 ﻿using System;
 using BCrypt.Net;
 using OOP2Projekt;
+using System.Security.Cryptography;
 using System.Globalization;
 using System.Resources;
 using System.Threading;
@@ -112,16 +113,31 @@ namespace OOP2Projekt
                 string saltedPassword = password + pepper;
                 string hashedPassword = BCrypt.Net.BCrypt.HashPassword(saltedPassword);
 
+                // Šifriranje podataka korisnika pomoću AES-a
+                string userData = $"{username},{email},{gender}";
+                var (encryptedContent, aesKey, aesIV) = AesEncryption.EncryptContent(userData);
+
+                // Generiranje RSA ključeva
+                var (publicKey, privateKey) = RsaEncryption.GenerateRsaKeys();
+
+                // Šifriranje AES ključa pomoću RSA-a
+                byte[] encryptedKey = RsaEncryption.EncryptSymmetricKey(aesKey, publicKey);
+
                 using (SQLiteConnection connection = new SQLiteConnection(@"Data Source=E:\BazaOOP2\KorisniciPrograma.db;Version=3;"))
                 {
                     connection.Open();
-                    string query = "INSERT INTO Korisnici (Username, Password, Email, Gender) VALUES (@Username, @Password, @Email, @Gender)";
+                    string query = "INSERT INTO Korisnici (Username, Password, Email, Gender, EncryptedData, EncryptedKey, IV, PublicKey, PrivateKey) " + "VALUES (@Username, @Password, @Email, @Gender, @EncryptedData, @EncryptedKey, @IV, @PublicKey, @PrivateKey)";
                     using (SQLiteCommand command = new SQLiteCommand(query, connection))
                     {
                         command.Parameters.AddWithValue("@Username", username);
                         command.Parameters.AddWithValue("@Password", hashedPassword);
                         command.Parameters.AddWithValue("@Email", email);
                         command.Parameters.AddWithValue("@Gender", gender);
+                        command.Parameters.AddWithValue("@EncryptedData", Convert.ToBase64String(encryptedContent));
+                        command.Parameters.AddWithValue("@EncryptedKey", Convert.ToBase64String(encryptedKey));
+                        command.Parameters.AddWithValue("@IV", Convert.ToBase64String(aesIV));
+                        command.Parameters.AddWithValue("@PublicKey", publicKey);
+                        command.Parameters.AddWithValue("@PrivateKey", privateKey);
                         command.ExecuteNonQuery();
                     }
                     connection.Close();

@@ -68,26 +68,45 @@ namespace OOP2Projekt
                 using (SQLiteConnection connection = new SQLiteConnection(@"Data Source=E:\BazaOOP2\KorisniciPrograma.db;Version=3;"))
                 {
                     connection.Open();
-                    string query = "SELECT Password FROM Korisnici WHERE Username = @Username";
-                    using(SQLiteCommand command = new SQLiteCommand(query, connection))
+                    string query = "SELECT Password, EncryptedData, EncryptedKey, IV, PublicKey, PrivateKey FROM Korisnici WHERE Username = @Username";
+                    using (SQLiteCommand command = new SQLiteCommand(query, connection))
                     {
                         command.Parameters.AddWithValue("@Username", username);
-                        string storedHashedPassword = command.ExecuteScalar() as string;
+                        using (SQLiteDataReader reader = command.ExecuteReader())
+                        {
+                            if (reader.Read())
+                            {
+                                string storedHashedPassword = reader["Password"].ToString();
+                                if (BCrypt.Net.BCrypt.Verify(saltedPassword, storedHashedPassword))
+                                {
+                                    // Dešifriranje pohranjenih podataka
+                                    byte[] encryptedData = Convert.FromBase64String(reader["EncryptedData"].ToString());
+                                    byte[] encryptedKey = Convert.FromBase64String(reader["EncryptedKey"].ToString());
+                                    byte[] iv = Convert.FromBase64String(reader["IV"].ToString());
+                                    string privateKey = reader["PrivateKey"].ToString();
 
-                        if (storedHashedPassword != null &&  BCrypt.Net.BCrypt.Verify(saltedPassword, storedHashedPassword))
-                        {
-                            MessageBox.Show("Prijava uspješna!");
-                            //nastavak prijave
-                        }
-                        else
-                        {
-                            MessageBox.Show("Pogrešno korisničko ime ili lozinka.");
+                                    byte[] aesKey = RsaEncryption.DecryptSymmetricKey(encryptedKey, privateKey);
+                                    string decryptedData = AesEncryption.DecryptContent(encryptedData, aesKey, iv);
+
+                                    MessageBox.Show("Prijava uspješna!");
+                                    MessageBox.Show($"Dešifrirani podaci: {decryptedData}");
+                                    // Nastavite s prijavom
+                                }
+                                else
+                                {
+                                    MessageBox.Show("Pogrešno korisničko ime ili lozinka.");
+                                }
+                            }
+                            else
+                            {
+                                MessageBox.Show("Pogrešno korisničko ime ili lozinka.");
+                            }
                         }
                     }
                     connection.Close();
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 MessageBox.Show(resManager.GetString("ErrorOccured", cultureInfo) + ": " + ex.Message);
             }
