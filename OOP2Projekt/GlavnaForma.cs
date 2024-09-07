@@ -45,11 +45,6 @@ namespace OOP2Projekt
             LanguageSettings.OnLanguageChanged -= LanguageChangedHandler;
             base.OnFormClosed(e);
         }
-
-        private void comboBoxLanguage_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
-        }
     }
 
 }

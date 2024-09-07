@@ -27,6 +27,7 @@ namespace OOP2Projekt
         public RegistracijskaForma()
         {
             InitializeComponent();
+            this.buttonRegistracijaPotvrda.Click += new System.EventHandler(this.buttonRegistracijaPotvrda_Click);
             LanguageSettings.OnLanguageChanged += LanguageChangedHandler; // Pretplata na događaj
             SetLanguage(LanguageSettings.CurrentLanguage);
         }
@@ -68,7 +69,7 @@ namespace OOP2Projekt
         private bool UserExists(string username, string email)
         {
             string connectinString = @"Data Source=E:\BazaOOP2\KorisniciPrograma.db;Version=3;";
-            using(SQLiteConnection connection = new SQLiteConnection(connectinString))
+            using (SQLiteConnection connection = new SQLiteConnection(connectinString))
             {
                 connection.Open();
                 string query = "SELECT COUNT(*) FROM Korisnici WHERE Username = @Username OR Email = @Email";
@@ -101,7 +102,7 @@ namespace OOP2Projekt
                 return;
             }
 
-            if(UserExists(username, email))
+            if (UserExists(username, email))
             {
                 MessageBox.Show(resManager.GetString("UserExists", cultureInfo));
                 return;
@@ -144,7 +145,7 @@ namespace OOP2Projekt
                 }
                 MessageBox.Show(resManager.GetString("RegistrationSuccessful", cultureInfo));
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 MessageBox.Show(resManager.GetString("ErrorOccured", cultureInfo) + ": " + ex.Message);
             }
@@ -160,6 +161,5 @@ namespace OOP2Projekt
             LanguageSettings.CurrentLanguage = selectedLanguage;
             SetLanguage(selectedLanguage); // Odmah primijenite promjenu jezika
         }
-
     }
 }

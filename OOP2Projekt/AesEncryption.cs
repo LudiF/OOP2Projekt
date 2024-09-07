@@ -10,6 +10,7 @@ namespace OOP2Projekt
         {
             using (Aes aesAlg = Aes.Create())
             {
+                aesAlg.KeySize = 256; // Koristimo 256-bitni AES ključ
                 aesAlg.GenerateKey();
                 aesAlg.GenerateIV();
 
@@ -22,6 +23,8 @@ namespace OOP2Projekt
                     {
                         swEncrypt.Write(plainText);
                     }
+
+                    // Vratimo šifrirane podatke, ključ i IV
                     return (msEncrypt.ToArray(), aesAlg.Key, aesAlg.IV);
                 }
             }
@@ -29,6 +32,11 @@ namespace OOP2Projekt
 
         public static string DecryptContent(byte[] cipherText, byte[] key, byte[] iv)
         {
+            if (key == null || key.Length != 32) // 32 bytea = 256 bita
+                throw new ArgumentException("Invalid AES key length.");
+            if (iv == null || iv.Length != 16) // 16 bytea za IV
+                throw new ArgumentException("Invalid AES IV length.");
+
             using (Aes aesAlg = Aes.Create())
             {
                 aesAlg.Key = key;
@@ -40,6 +48,7 @@ namespace OOP2Projekt
                 using (CryptoStream csDecrypt = new CryptoStream(msDecrypt, decryptor, CryptoStreamMode.Read))
                 using (StreamReader srDecrypt = new StreamReader(csDecrypt))
                 {
+                    // Povratak dešifriranog teksta
                     return srDecrypt.ReadToEnd();
                 }
             }

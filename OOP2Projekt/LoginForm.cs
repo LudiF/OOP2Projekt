@@ -20,7 +20,11 @@ namespace OOP2Projekt
     {
         ResourceManager resManager;
         CultureInfo cultureInfo;
-
+        private bool IsBase64String(string base64)
+        {
+            Span<byte> buffer = new Span<byte>(new byte[base64.Length]);
+            return Convert.TryFromBase64String(base64, buffer, out _);
+        }
         public LoginForm()
         {
             InitializeComponent();
@@ -79,18 +83,20 @@ namespace OOP2Projekt
                                 string storedHashedPassword = reader["Password"].ToString();
                                 if (BCrypt.Net.BCrypt.Verify(saltedPassword, storedHashedPassword))
                                 {
+
                                     // Dešifriranje pohranjenih podataka
-                                    byte[] encryptedData = Convert.FromBase64String(reader["EncryptedData"].ToString());
-                                    byte[] encryptedKey = Convert.FromBase64String(reader["EncryptedKey"].ToString());
-                                    byte[] iv = Convert.FromBase64String(reader["IV"].ToString());
-                                    string privateKey = reader["PrivateKey"].ToString();
+                                    string encryptedDataStr = reader["EncryptedData"].ToString();
+                                    string encryptedKeyStr = reader["EncryptedKey"].ToString();
+                                    string ivStr = reader["IV"].ToString();
 
-                                    byte[] aesKey = RsaEncryption.DecryptSymmetricKey(encryptedKey, privateKey);
-                                    string decryptedData = AesEncryption.DecryptContent(encryptedData, aesKey, iv);
-
-                                    MessageBox.Show("Prijava uspješna!");
-                                    MessageBox.Show($"Dešifrirani podaci: {decryptedData}");
+                                    // Dekodiranje iz Base64 formata natrag u byte nizove
+                                    byte[] encryptedData = Convert.FromBase64String(encryptedDataStr);
+                                    byte[] encryptedKey = Convert.FromBase64String(encryptedKeyStr);
+                                    byte[] iv = Convert.FromBase64String(ivStr);
                                     // Nastavite s prijavom
+
+                                    GlavnaForma glavnaForma = new GlavnaForma();
+                                    glavnaForma.Show();
                                 }
                                 else
                                 {
