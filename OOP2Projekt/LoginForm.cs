@@ -1,4 +1,5 @@
 ﻿using System;
+using FontAwesome.Sharp;
 using BCrypt.Net;
 using OOP2Projekt;
 using System.Collections.Generic;
@@ -97,6 +98,7 @@ namespace OOP2Projekt
 
                                     GlavnaForma glavnaForma = new GlavnaForma();
                                     glavnaForma.Show();
+                                    this.Hide();
                                 }
                                 else
                                 {

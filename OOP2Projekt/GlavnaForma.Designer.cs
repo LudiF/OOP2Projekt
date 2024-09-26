@@ -6,31 +6,34 @@
 
         private void InitializeComponent()
         {
-            this.comboBoxLanguage = new System.Windows.Forms.ComboBox();
-            this.SuspendLayout();
+            comboBoxLanguage = new System.Windows.Forms.ComboBox();
+            SuspendLayout();
             // 
             // comboBoxLanguage
             // 
-            this.comboBoxLanguage.FormattingEnabled = true;
-            this.comboBoxLanguage.Location = new System.Drawing.Point(1089, 12);
-            this.comboBoxLanguage.Name = "comboBoxLanguage";
-            this.comboBoxLanguage.Size = new System.Drawing.Size(121, 21);
-            this.comboBoxLanguage.TabIndex = 0;
+            comboBoxLanguage.FormattingEnabled = true;
+            comboBoxLanguage.Location = new System.Drawing.Point(1270, 14);
+            comboBoxLanguage.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            comboBoxLanguage.Name = "comboBoxLanguage";
+            comboBoxLanguage.Size = new System.Drawing.Size(140, 23);
+            comboBoxLanguage.TabIndex = 0;
             // 
             // GlavnaForma
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1222, 621);
-            this.Controls.Add(this.comboBoxLanguage);
-            this.Name = "GlavnaForma";
-            this.Text = "GlavnaForma";
-            this.ResumeLayout(false);
-
+            AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
+            AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            ClientSize = new System.Drawing.Size(1426, 717);
+            Controls.Add(comboBoxLanguage);
+            Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            Name = "GlavnaForma";
+            Text = "GlavnaForma";
+            Load += GlavnaForma_Load;
+            ResumeLayout(false);
         }
 
         #endregion
 
         private System.Windows.Forms.ComboBox comboBoxLanguage;
+        private System.Windows.Forms.PictureBox pictureBoxUploadProfile;
     }
 }

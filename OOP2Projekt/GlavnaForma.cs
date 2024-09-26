@@ -1,4 +1,5 @@
 ﻿using System;
+using FontAwesome.Sharp;
 using OOP2Projekt;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -18,9 +19,19 @@ namespace OOP2Projekt
         public GlavnaForma()
         {
             InitializeComponent();
+
+            // Dodavanje ikone na gumb
+            //IconButton button = new IconButton();
+            //button.IconChar = IconChar.Home;
+            //button.IconColor = Color.Black;
+            //button.Text = "Home";
+            //button.Size = new Size(100, 50);
+            //this.Controls.Add(button);
+
             LanguageSettings.OnLanguageChanged += LanguageChangedHandler; // Pretplata na događaj
             SetLanguage(LanguageSettings.CurrentLanguage);
         }
+
 
         private void LanguageChangedHandler(object sender, EventArgs e)
         {
@@ -45,6 +56,10 @@ namespace OOP2Projekt
             LanguageSettings.OnLanguageChanged -= LanguageChangedHandler;
             base.OnFormClosed(e);
         }
-    }
 
+        private void GlavnaForma_Load(object sender, EventArgs e)
+        {
+
+        }
+    }
 }

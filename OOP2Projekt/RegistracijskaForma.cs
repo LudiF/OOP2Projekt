@@ -1,4 +1,5 @@
 ﻿using System;
+using FontAwesome.Sharp;
 using BCrypt.Net;
 using OOP2Projekt;
 using System.Security.Cryptography;
