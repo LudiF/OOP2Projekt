@@ -9,6 +9,8 @@
             comboBoxLanguage = new System.Windows.Forms.ComboBox();
             iconButton1 = new FontAwesome.Sharp.IconButton();
             buttonTrackProgress = new System.Windows.Forms.Button();
+            richTextBoxMealPlan = new System.Windows.Forms.RichTextBox();
+            buttonGetMealPlan = new System.Windows.Forms.Button();
             SuspendLayout();
             // 
             // comboBoxLanguage
@@ -35,14 +37,31 @@
             // 
             // buttonTrackProgress
             // 
-            buttonTrackProgress.Location = new System.Drawing.Point(258, 200);
+            buttonTrackProgress.Location = new System.Drawing.Point(10, 285);
             buttonTrackProgress.Name = "buttonTrackProgress";
             buttonTrackProgress.Size = new System.Drawing.Size(75, 23);
             buttonTrackProgress.TabIndex = 2;
             buttonTrackProgress.Text = "Progress";
             buttonTrackProgress.UseVisualStyleBackColor = true;
-            this.buttonTrackProgress.Click += new System.EventHandler(this.buttonTrackProgress_Click);
-
+            buttonTrackProgress.Click += buttonTrackProgress_Click;
+            // 
+            // richTextBoxMealPlan
+            // 
+            richTextBoxMealPlan.Location = new System.Drawing.Point(10, 50);
+            richTextBoxMealPlan.Name = "richTextBoxMealPlan";
+            richTextBoxMealPlan.Size = new System.Drawing.Size(400, 200);
+            richTextBoxMealPlan.TabIndex = 3;
+            richTextBoxMealPlan.Text = "";
+            // 
+            // buttonGetMealPlan
+            // 
+            buttonGetMealPlan.Location = new System.Drawing.Point(10, 256);
+            buttonGetMealPlan.Name = "buttonGetMealPlan";
+            buttonGetMealPlan.Size = new System.Drawing.Size(100, 23);
+            buttonGetMealPlan.TabIndex = 4;
+            buttonGetMealPlan.Text = "Get Meal Plan";
+            buttonGetMealPlan.UseVisualStyleBackColor = true;
+            buttonGetMealPlan.Click += buttonGetMealPlan_Click;
             // 
             // GlavnaForma
             // 
@@ -51,6 +70,8 @@
             ClientSize = new System.Drawing.Size(1099, 556);
             Controls.Add(buttonTrackProgress);
             Controls.Add(iconButton1);
+            Controls.Add(richTextBoxMealPlan);
+            Controls.Add(buttonGetMealPlan);
             Controls.Add(comboBoxLanguage);
             Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             Name = "GlavnaForma";
@@ -65,5 +86,7 @@
         private System.Windows.Forms.PictureBox pictureBoxUploadProfile;
         private FontAwesome.Sharp.IconButton iconButton1;
         private System.Windows.Forms.Button buttonTrackProgress;
+        private System.Windows.Forms.RichTextBox richTextBoxMealPlan;
+        private System.Windows.Forms.Button buttonGetMealPlan;
     }
 }
