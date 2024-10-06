@@ -1,4 +1,6 @@
 ﻿using System;
+using ProgressTrackingLibrary;
+using UserProfileLibrary;
 using FontAwesome.Sharp;
 using OOP2Projekt;
 using System.Collections.Generic;
@@ -11,14 +13,17 @@ using System.Resources;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Microsoft.VisualBasic.ApplicationServices;
 
 namespace OOP2Projekt
 {
     public partial class GlavnaForma : Form, ILocalizable
     {
-        public GlavnaForma()
+        private int userId;
+        public GlavnaForma(int userId)
         {
             InitializeComponent();
+            this.userId = userId;
 
             // Dodavanje ikone na gumb
             //IconButton button = new IconButton();
@@ -61,5 +66,20 @@ namespace OOP2Projekt
         {
 
         }
+
+        private void iconButton1_Click(object sender, EventArgs e)
+        {
+            // Ovdje otvaramo formu za postavke iz vanjskog DLL-a
+            UserProfileForm userProfileForm = new UserProfileForm(); // pretpostavljamo da se klasa iz DLL-a zove UserProfileForm
+            userProfileForm.ShowDialog(); // Otvara formu kao modalni dijalog
+        }
+
+        private void buttonTrackProgress_Click(object sender, EventArgs e)
+        {
+            var progressForm = new ProgressForm(userId);
+            progressForm.Show();
+        }
+
+
     }
 }

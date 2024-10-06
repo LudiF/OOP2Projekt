@@ -18,11 +18,22 @@
     <PackageReference Include="EntityFramework" Version="6.5.1" />
     <PackageReference Include="FontAwesome.Sharp" Version="6.6.0" />
     <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     <PackageReference Include="System.ComponentModel.Annotations" Version="5.0.0" />
     <PackageReference Include="System.Data.DataSetExtensions" Version="4.5.0" />
-    <PackageReference Include="System.Data.SQLite" Version="1.0.118" />
-    <PackageReference Include="System.Data.SQLite.Core" Version="1.0.118" />
-    <PackageReference Include="System.Data.SQLite.EF6" Version="1.0.118" />
+    <PackageReference Include="System.Data.SQLite" Version="1.0.119" />
+    <PackageReference Include="System.Data.SQLite.Core" Version="1.0.119" />
+    <PackageReference Include="System.Data.SQLite.EF6" Version="1.0.119" />
+    <PackageReference Include="System.Net.Http" Version="4.3.4" />
     <PackageReference Include="System.Runtime.CompilerServices.Unsafe" Version="6.0.0" />
+    <PackageReference Include="WinForms.DataVisualization" Version="1.9.2" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="ProgressTrackingLibrary">
+      <HintPath>..\..\ProgressTrackingLibrary\ProgressTrackingLibrary\bin\Debug\net8.0-windows\ProgressTrackingLibrary.dll</HintPath>
+    </Reference>
+    <Reference Include="UserProfileLibrary">
+      <HintPath>..\..\UserProfileLibrary\UserProfileLibrary\bin\Debug\net8.0-windows\UserProfileLibrary.dll</HintPath>
+    </Reference>
   </ItemGroup>
 </Project>

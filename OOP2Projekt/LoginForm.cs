@@ -26,6 +26,7 @@ namespace OOP2Projekt
             Span<byte> buffer = new Span<byte>(new byte[base64.Length]);
             return Convert.TryFromBase64String(base64, buffer, out _);
         }
+
         public LoginForm()
         {
             InitializeComponent();
@@ -59,11 +60,42 @@ namespace OOP2Projekt
 
             comboBoxLanguage.SelectedItem = langCode == "hr" ? "Hrvatski" : "English";
         }
+        private int GetUserIdFromDatabase(string username)
+        {
+            int userId = -1; // Zadana vrijednost za nepostojećeg korisnika
 
+            // Povezivanje s bazom podataka
+            using (SQLiteConnection connection = new SQLiteConnection(@"Data Source=E:\BazaOOP2\KorisniciPrograma.db;Version=3;"))
+            {
+                connection.Open();
+                string query = "SELECT Id FROM Korisnici WHERE Username = @Username";
+                using (SQLiteCommand command = new SQLiteCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@Username", username);
+                    object result = command.ExecuteScalar();
+
+                    // Ako je pronađen korisnik, spremamo njegov ID
+                    if (result != null)
+                    {
+                        userId = Convert.ToInt32(result);
+                    }
+                }
+            }
+
+            return userId; // Vraćamo korisnički ID ili -1 ako korisnik nije pronađen
+        }
         private void buttonPrijava_Click(object sender, EventArgs e)
         {
             string username = textBoxKorisnickoIme.Text;
             string password = textBoxLozinka.Text;
+
+            int userId = GetUserIdFromDatabase(username); // Dobivanje userId-a iz baze podataka
+
+            if (userId == -1)
+            {
+                MessageBox.Show("Korisnik nije pronađen.");
+                return;
+            }
 
             string pepper = "mojPapar";
             string saltedPassword = password + pepper;
@@ -84,7 +116,6 @@ namespace OOP2Projekt
                                 string storedHashedPassword = reader["Password"].ToString();
                                 if (BCrypt.Net.BCrypt.Verify(saltedPassword, storedHashedPassword))
                                 {
-
                                     // Dešifriranje pohranjenih podataka
                                     string encryptedDataStr = reader["EncryptedData"].ToString();
                                     string encryptedKeyStr = reader["EncryptedKey"].ToString();
@@ -94,9 +125,9 @@ namespace OOP2Projekt
                                     byte[] encryptedData = Convert.FromBase64String(encryptedDataStr);
                                     byte[] encryptedKey = Convert.FromBase64String(encryptedKeyStr);
                                     byte[] iv = Convert.FromBase64String(ivStr);
-                                    // Nastavite s prijavom
 
-                                    GlavnaForma glavnaForma = new GlavnaForma();
+                                    // Otvori GlavnaForma i proslijedi userId
+                                    GlavnaForma glavnaForma = new GlavnaForma(userId);
                                     glavnaForma.Show();
                                     this.Hide();
                                 }
