@@ -14,9 +14,9 @@ public class SpoonacularAPIClient
         _httpClient = new HttpClient();
     }
 
-    public async Task<MealPlanResponse> GetMealPlan()
+    public async Task<MealPlanResponse> GetMealPlan(int targetCalories)
     {
-        string requestUrl = $"https://api.spoonacular.com/mealplanner/generate?timeFrame=day&apiKey={_apiKey}";
+        string requestUrl = $"https://api.spoonacular.com/mealplanner/generate?timeFrame=day&targetCalories={targetCalories}&apiKey={_apiKey}";
 
         try
         {
@@ -38,4 +38,5 @@ public class SpoonacularAPIClient
             throw new Exception($"Došlo je do greške prilikom preuzimanja podataka: {ex.Message}");
         }
     }
+
 }

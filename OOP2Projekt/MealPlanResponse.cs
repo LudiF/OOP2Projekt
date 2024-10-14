@@ -13,6 +13,7 @@ namespace OOP2Projekt
         public int ReadyInMinutes { get; set; }
         public int Servings { get; set; }
         public string SourceUrl { get; set; }
+        public string ImageType { get; set; }
     }
 
     public class Nutrients

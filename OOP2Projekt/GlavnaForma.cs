@@ -8,7 +8,9 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Globalization;
+using System.IO;
 using System.Linq;
+using System.Net;
 using System.Resources;
 using System.Text;
 using System.Threading.Tasks;
@@ -21,23 +23,45 @@ namespace OOP2Projekt
     {
         private SpoonacularAPIClient _apiClient;
         private int userId;
+        private int downloadSpeedLimit = 0; // Brzina preuzimanja u bajtovima po sekundi (0 znači bez ograničenja)
+
         public GlavnaForma(int userId)
         {
             InitializeComponent();
-            
             _apiClient = new SpoonacularAPIClient(); // Inicijaliziraj API klijent
             this.userId = userId;
 
-            // Dodavanje ikone na gumb
-            //IconButton button = new IconButton();
-            //button.IconChar = IconChar.Home;
-            //button.IconColor = Color.Black;
-            //button.Text = "Home";
-            //button.Size = new Size(100, 50);
-            //this.Controls.Add(button);
+            // Postavljanje brzine preuzimanja (proizvoljne vrijednosti)
+            comboBoxSpeed.Items.Add("Bez ograničenja");
+            comboBoxSpeed.Items.Add("20 KB/s");
+            comboBoxSpeed.Items.Add("100 KB/s");
+            comboBoxSpeed.Items.Add("200 KB/s");
+            comboBoxSpeed.SelectedIndex = 0;
+
+            comboBoxSpeed.SelectedIndexChanged += ComboBoxSpeed_SelectedIndexChanged;
 
             LanguageSettings.OnLanguageChanged += LanguageChangedHandler; // Pretplata na događaj
             SetLanguage(LanguageSettings.CurrentLanguage);
+        }
+
+        private void ComboBoxSpeed_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            // Postavljanje ograničenja brzine na temelju izbora
+            switch (comboBoxSpeed.SelectedIndex)
+            {
+                case 1: // 20 KB/s
+                    downloadSpeedLimit = 20 * 1024;
+                    break;
+                case 2: // 100 KB/s
+                    downloadSpeedLimit = 100 * 1024;
+                    break;
+                case 3: // 200 KB/s
+                    downloadSpeedLimit = 200 * 1024;
+                    break;
+                default: // Bez ograničenja
+                    downloadSpeedLimit = 0;
+                    break;
+            }
         }
 
         private async Task<bool> CheckInternetConnectionAsync()
@@ -67,29 +91,30 @@ namespace OOP2Projekt
 
             try
             {
-                // Pokreće preuzimanje plana prehrane
-                MealPlanResponse mealPlanResponse = await _apiClient.GetMealPlan();
+                int targetCalories = (int)numericUpDownCalories.Value; // Ovdje uzmi ciljani broj kalorija
+                MealPlanResponse mealPlanResponse = await _apiClient.GetMealPlan(targetCalories);
 
-                // Prikazuje preuzeti plan prehrane
-                StringBuilder mealPlanText = new StringBuilder();
+                richTextBoxMealPlan.Clear(); // Očisti RichTextBox
                 foreach (var meal in mealPlanResponse.Meals)
                 {
-                    mealPlanText.AppendLine($"Naslov: {meal.Title}");
-                    mealPlanText.AppendLine($"Vrijeme pripreme: {meal.ReadyInMinutes} minuta");
-                    mealPlanText.AppendLine($"Porcije: {meal.Servings}");
-                    mealPlanText.AppendLine($"Link: {meal.SourceUrl}");
-                    mealPlanText.AppendLine(); // Prazan red za razdvajanje između obroka
+                    AppendTextToRichTextBox($"Naslov: {meal.Title}\n", FontStyle.Bold);
+                    AppendTextToRichTextBox($"Vrijeme pripreme: {meal.ReadyInMinutes} minuta\n");
+                    AppendTextToRichTextBox($"Porcije: {meal.Servings}\n");
+                    AppendTextToRichTextBox($"Link: {meal.SourceUrl}\n");
+
+                    // Dodaj URL slike
+                    string imageUrl = $"https://spoonacular.com/recipeImages/{meal.Id}-312x231.{meal.ImageType}";
+                    await AddImageToRichTextBox(imageUrl); // Preuzmi sliku i prikaži uz napredak
+
+                    AppendTextToRichTextBox("\n\n"); // Razmak između obroka
                 }
 
                 // Dodaj informacije o hranjivim tvarima
-                mealPlanText.AppendLine("Ukupni nutrijenti za dan:");
-                mealPlanText.AppendLine($"Kalorije: {mealPlanResponse.Nutrients.Calories} kcal");
-                mealPlanText.AppendLine($"Proteini: {mealPlanResponse.Nutrients.Protein} g");
-                mealPlanText.AppendLine($"Masti: {mealPlanResponse.Nutrients.Fat} g");
-                mealPlanText.AppendLine($"Ugljikohidrati: {mealPlanResponse.Nutrients.Carbohydrates} g");
-
-                // Prikaz u richTextBox
-                richTextBoxMealPlan.Text = mealPlanText.ToString();
+                AppendTextToRichTextBox("Ukupni nutrijenti za dan:\n", FontStyle.Bold);
+                AppendTextToRichTextBox($"Kalorije: {mealPlanResponse.Nutrients.Calories} kcal\n");
+                AppendTextToRichTextBox($"Proteini: {mealPlanResponse.Nutrients.Protein} g\n");
+                AppendTextToRichTextBox($"Masti: {mealPlanResponse.Nutrients.Fat} g\n");
+                AppendTextToRichTextBox($"Ugljikohidrati: {mealPlanResponse.Nutrients.Carbohydrates} g\n");
             }
             catch (Exception ex)
             {
@@ -97,40 +122,87 @@ namespace OOP2Projekt
             }
         }
 
+        private async Task AddImageToRichTextBox(string imageUrl)
+        {
+            try
+            {
+                WebRequest request = WebRequest.Create(imageUrl);
+
+                using (WebResponse response = await request.GetResponseAsync())
+                using (Stream stream = response.GetResponseStream())
+                using (MemoryStream ms = new MemoryStream())
+                {
+                    // Prikaz tijeka preuzimanja
+                    progressBarDownload.Visible = true;
+                    byte[] buffer = new byte[8192];
+                    int bytesRead;
+                    int totalBytesRead = 0;
+                    int totalBytesToRead = (int)response.ContentLength;
+
+                    while ((bytesRead = await stream.ReadAsync(buffer, 0, buffer.Length)) > 0)
+                    {
+                        if (downloadSpeedLimit > 0)
+                        {
+                            // Ograniči brzinu preuzimanja
+                            await Task.Delay(1000 * bytesRead / downloadSpeedLimit);
+                        }
+
+                        await ms.WriteAsync(buffer, 0, bytesRead);
+                        totalBytesRead += bytesRead;
+
+                        // Ažuriraj progress bar
+                        progressBarDownload.Value = (int)((totalBytesRead / (float)totalBytesToRead) * 100);
+                    }
+
+                    Image img = Image.FromStream(ms);
+                    Image resizedImage = new Bitmap(img, new Size(100, 100)); // Smanji sliku na 100x100
+                    Clipboard.SetImage(resizedImage); // Kopiraj sliku u clipboard
+                    richTextBoxMealPlan.ReadOnly = false;
+                    richTextBoxMealPlan.Paste();
+                    richTextBoxMealPlan.ReadOnly = true;
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Greška pri dodavanju slike: " + ex.Message);
+            }
+            finally
+            {
+                progressBarDownload.Visible = false; // Sakrij progress bar kad preuzimanje završi
+            }
+        }
+
+        private void AppendTextToRichTextBox(string text, FontStyle style = FontStyle.Regular)
+        {
+            richTextBoxMealPlan.SelectionFont = new Font(richTextBoxMealPlan.Font, style);
+            richTextBoxMealPlan.AppendText(text);
+            richTextBoxMealPlan.SelectionFont = new Font(richTextBoxMealPlan.Font, FontStyle.Regular); // Resetiraj stil
+        }
+
         private void LanguageChangedHandler(object sender, EventArgs e)
         {
             SetLanguage(LanguageSettings.CurrentLanguage); // Ažuriraj jezik kad se događaj pokrene
         }
 
-        public void SetLanguage(string langCode) // Promijenite u public
+        public void SetLanguage(string langCode)
         {
-            // Inicijalizirajte cultureInfo i resManager
             CultureInfo cultureInfo = CultureInfo.CreateSpecificCulture(langCode);
             ResourceManager resManager = new ResourceManager("OOP2Projekt.Resources", typeof(GlavnaForma).Assembly);
 
-            // Ažurirajte UI elemente
             this.Text = resManager.GetString("MainFormTitle", cultureInfo);
-            // Postavite ispravnu vrijednost u ComboBox-u
             comboBoxLanguage.SelectedItem = langCode == "hr" ? "Hrvatski" : "English";
         }
 
         protected override void OnFormClosed(FormClosedEventArgs e)
         {
-            // Odjavite se s događaja kada se forma zatvori
             LanguageSettings.OnLanguageChanged -= LanguageChangedHandler;
             base.OnFormClosed(e);
         }
 
-        private void GlavnaForma_Load(object sender, EventArgs e)
-        {
-
-        }
-
         private void iconButton1_Click(object sender, EventArgs e)
         {
-            // Ovdje otvaramo formu za postavke iz vanjskog DLL-a
-            UserProfileForm userProfileForm = new UserProfileForm(); // pretpostavljamo da se klasa iz DLL-a zove UserProfileForm
-            userProfileForm.ShowDialog(); // Otvara formu kao modalni dijalog
+            UserProfileForm userProfileForm = new UserProfileForm();
+            userProfileForm.ShowDialog();
         }
 
         private void buttonTrackProgress_Click(object sender, EventArgs e)
@@ -138,7 +210,5 @@ namespace OOP2Projekt
             var progressForm = new ProgressForm(userId);
             progressForm.Show();
         }
-
-
     }
 }
