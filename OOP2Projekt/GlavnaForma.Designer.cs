@@ -18,6 +18,8 @@
             progressBarDownload = new System.Windows.Forms.ProgressBar();
             comboBoxSpeed = new System.Windows.Forms.ComboBox();
             label3 = new System.Windows.Forms.Label();
+            iconButtonCloseProgram = new FontAwesome.Sharp.IconButton();
+            iconButtonUserProfile = new FontAwesome.Sharp.IconButton();
             ((System.ComponentModel.ISupportInitialize)numericUpDownCalories).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBoxMeal).BeginInit();
             SuspendLayout();
@@ -37,7 +39,7 @@
             iconButton1.IconColor = System.Drawing.Color.DimGray;
             iconButton1.IconFont = FontAwesome.Sharp.IconFont.Auto;
             iconButton1.IconSize = 36;
-            iconButton1.Location = new System.Drawing.Point(1037, 12);
+            iconButton1.Location = new System.Drawing.Point(981, 8);
             iconButton1.Name = "iconButton1";
             iconButton1.Size = new System.Drawing.Size(50, 40);
             iconButton1.TabIndex = 1;
@@ -130,11 +132,38 @@
             label3.TabIndex = 15;
             label3.Text = "Odaberi brzinu preuzimanja";
             // 
+            // iconButtonCloseProgram
+            // 
+            iconButtonCloseProgram.IconChar = FontAwesome.Sharp.IconChar.PersonWalkingArrowRight;
+            iconButtonCloseProgram.IconColor = System.Drawing.Color.DimGray;
+            iconButtonCloseProgram.IconFont = FontAwesome.Sharp.IconFont.Auto;
+            iconButtonCloseProgram.IconSize = 36;
+            iconButtonCloseProgram.Location = new System.Drawing.Point(1037, 8);
+            iconButtonCloseProgram.Name = "iconButtonCloseProgram";
+            iconButtonCloseProgram.Size = new System.Drawing.Size(50, 40);
+            iconButtonCloseProgram.TabIndex = 16;
+            iconButtonCloseProgram.UseVisualStyleBackColor = true;
+            // 
+            // iconButtonUserProfile
+            // 
+            iconButtonUserProfile.IconChar = FontAwesome.Sharp.IconChar.User;
+            iconButtonUserProfile.IconColor = System.Drawing.Color.DimGray;
+            iconButtonUserProfile.IconFont = FontAwesome.Sharp.IconFont.Auto;
+            iconButtonUserProfile.IconSize = 36;
+            iconButtonUserProfile.Location = new System.Drawing.Point(925, 8);
+            iconButtonUserProfile.Name = "iconButtonUserProfile";
+            iconButtonUserProfile.Size = new System.Drawing.Size(50, 40);
+            iconButtonUserProfile.TabIndex = 17;
+            iconButtonUserProfile.UseVisualStyleBackColor = true;
+            iconButtonUserProfile.Click += iconButtonUserProfile_Click;
+            // 
             // GlavnaForma
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             ClientSize = new System.Drawing.Size(1099, 556);
+            Controls.Add(iconButtonUserProfile);
+            Controls.Add(iconButtonCloseProgram);
             Controls.Add(label3);
             Controls.Add(comboBoxSpeed);
             Controls.Add(progressBarDownload);
@@ -171,5 +200,7 @@
         private System.Windows.Forms.ProgressBar progressBarDownload;
         private System.Windows.Forms.ComboBox comboBoxSpeed;
         private System.Windows.Forms.Label label3;
+        private FontAwesome.Sharp.IconButton iconButtonCloseProgram;
+        private FontAwesome.Sharp.IconButton iconButtonUserProfile;
     }
 }

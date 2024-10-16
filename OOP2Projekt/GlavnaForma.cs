@@ -1,4 +1,5 @@
 ﻿using System;
+using Microsoft.Win32;
 using ProgressTrackingLibrary;
 using UserProfileLibrary;
 using FontAwesome.Sharp;
@@ -24,6 +25,105 @@ namespace OOP2Projekt
         private SpoonacularAPIClient _apiClient;
         private int userId;
         private int downloadSpeedLimit = 0; // Brzina preuzimanja u bajtovima po sekundi (0 znači bez ograničenja)
+
+        public GlavnaForma()
+        {
+            InitializeComponent();
+        }
+
+        // Metoda za spremanje postavki u INI datoteku
+        public void SaveSettingsToIni()
+        {
+            var ini = new IniFile("appsettings.ini");
+
+            // Provjera je li comboBoxLanguage inicijaliziran i ima li odabranu vrijednost
+            if (comboBoxLanguage != null && comboBoxLanguage.SelectedItem != null)
+            {
+                ini.Write("Settings", "Language", comboBoxLanguage.SelectedItem.ToString());
+            }
+            else
+            {
+                // Ako nema odabrane vrijednosti, postavi zadanu
+                ini.Write("Settings", "Language", "Hrvatski");
+            }
+        }
+
+        // Metoda za spremanje postavki u Windows registar (širina i visina prozora)
+        public void SaveWindowSettingsToRegistry()
+        {
+            try
+            {
+                RegistryKey key = Registry.CurrentUser.CreateSubKey(@"Software\OOP2Projekt");
+                key.SetValue("WindowWidth", this.Width.ToString());
+                key.SetValue("WindowHeight", this.Height.ToString());
+                key.Close();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Greška pri spremanju postavki: " + ex.Message);
+            }
+        }
+
+        // Metoda za učitavanje postavki iz INI datoteke
+        public void LoadSettingsFromIni()
+        {
+            var ini = new IniFile("appsettings.ini");
+            string language = ini.Read("Settings", "Language");
+
+            // Postavi jezik
+            if (!string.IsNullOrEmpty(language) && comboBoxLanguage.Items.Contains(language))
+            {
+                comboBoxLanguage.SelectedItem = language;
+            }
+            else
+            {
+                comboBoxLanguage.SelectedItem = "Hrvatski"; // Postavi zadani jezik ako nije postavljen
+            }
+        }
+
+        // Metoda za učitavanje postavki iz registra (širina i visina prozora)
+        public void LoadWindowSettingsFromRegistry()
+        {
+            try
+            {
+                RegistryKey key = Registry.CurrentUser.OpenSubKey(@"Software\OOP2Projekt");
+
+                if (key != null)
+                {
+                    object widthValue = key.GetValue("WindowWidth");
+                    object heightValue = key.GetValue("WindowHeight");
+
+                    if (int.TryParse(widthValue?.ToString(), out int windowWidth))
+                    {
+                        this.Width = windowWidth;
+                    }
+
+                    if (int.TryParse(heightValue?.ToString(), out int windowHeight))
+                    {
+                        this.Height = windowHeight;
+                    }
+
+                    key.Close();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Greška pri učitavanju postavki: " + ex.Message);
+            }
+        }
+
+        private void GlavnaForma_Load(object sender, EventArgs e)
+        {
+            LoadSettingsFromIni(); // Učitavanje postavki iz INI datoteke pri pokretanju aplikacije
+            LoadWindowSettingsFromRegistry(); // Učitavanje postavki iz registra pri pokretanju aplikacije
+        }
+
+        protected override void OnFormClosed(FormClosedEventArgs e)
+        {
+            SaveSettingsToIni(); // Spremanje postavki u INI datoteku pri zatvaranju aplikacije
+            SaveWindowSettingsToRegistry(); // Spremanje postavki u registar pri zatvaranju aplikacije
+            base.OnFormClosed(e);
+        }
 
         public GlavnaForma(int userId)
         {
@@ -70,7 +170,6 @@ namespace OOP2Projekt
             {
                 using (var httpClient = new System.Net.Http.HttpClient())
                 {
-                    // Pokušaj napraviti zahtjev na Google
                     var response = await httpClient.GetAsync("https://www.google.com");
                     return response.IsSuccessStatusCode;
                 }
@@ -132,7 +231,6 @@ namespace OOP2Projekt
                 using (Stream stream = response.GetResponseStream())
                 using (MemoryStream ms = new MemoryStream())
                 {
-                    // Prikaz tijeka preuzimanja
                     progressBarDownload.Visible = true;
                     byte[] buffer = new byte[8192];
                     int bytesRead;
@@ -143,20 +241,18 @@ namespace OOP2Projekt
                     {
                         if (downloadSpeedLimit > 0)
                         {
-                            // Ograniči brzinu preuzimanja
                             await Task.Delay(1000 * bytesRead / downloadSpeedLimit);
                         }
 
                         await ms.WriteAsync(buffer, 0, bytesRead);
                         totalBytesRead += bytesRead;
 
-                        // Ažuriraj progress bar
                         progressBarDownload.Value = (int)((totalBytesRead / (float)totalBytesToRead) * 100);
                     }
 
                     Image img = Image.FromStream(ms);
-                    Image resizedImage = new Bitmap(img, new Size(100, 100)); // Smanji sliku na 100x100
-                    Clipboard.SetImage(resizedImage); // Kopiraj sliku u clipboard
+                    Image resizedImage = new Bitmap(img, new Size(100, 100));
+                    Clipboard.SetImage(resizedImage);
                     richTextBoxMealPlan.ReadOnly = false;
                     richTextBoxMealPlan.Paste();
                     richTextBoxMealPlan.ReadOnly = true;
@@ -168,7 +264,7 @@ namespace OOP2Projekt
             }
             finally
             {
-                progressBarDownload.Visible = false; // Sakrij progress bar kad preuzimanje završi
+                progressBarDownload.Visible = false;
             }
         }
 
@@ -176,12 +272,12 @@ namespace OOP2Projekt
         {
             richTextBoxMealPlan.SelectionFont = new Font(richTextBoxMealPlan.Font, style);
             richTextBoxMealPlan.AppendText(text);
-            richTextBoxMealPlan.SelectionFont = new Font(richTextBoxMealPlan.Font, FontStyle.Regular); // Resetiraj stil
+            richTextBoxMealPlan.SelectionFont = new Font(richTextBoxMealPlan.Font, FontStyle.Regular);
         }
 
         private void LanguageChangedHandler(object sender, EventArgs e)
         {
-            SetLanguage(LanguageSettings.CurrentLanguage); // Ažuriraj jezik kad se događaj pokrene
+            SetLanguage(LanguageSettings.CurrentLanguage);
         }
 
         public void SetLanguage(string langCode)
@@ -193,22 +289,29 @@ namespace OOP2Projekt
             comboBoxLanguage.SelectedItem = langCode == "hr" ? "Hrvatski" : "English";
         }
 
-        protected override void OnFormClosed(FormClosedEventArgs e)
-        {
-            LanguageSettings.OnLanguageChanged -= LanguageChangedHandler;
-            base.OnFormClosed(e);
-        }
-
-        private void iconButton1_Click(object sender, EventArgs e)
-        {
-            UserProfileForm userProfileForm = new UserProfileForm();
-            userProfileForm.ShowDialog();
-        }
-
         private void buttonTrackProgress_Click(object sender, EventArgs e)
         {
             var progressForm = new ProgressForm(userId);
             progressForm.Show();
+        }
+
+        private void iconButton1_Click(object sender, EventArgs e)
+        {
+            SettingsForm settingsForm = new SettingsForm(this);
+            settingsForm.ShowDialog();
+        }
+
+        private void iconButtonUserProfile_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                UserProfileForm userProfileForm = new UserProfileForm();
+                userProfileForm.ShowDialog();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Došlo je do greške prilikom otvaranja korisničkog profila: " + ex.Message);
+            }
         }
     }
 }
