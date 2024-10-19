@@ -1,6 +1,6 @@
 ﻿using System;
 using Microsoft.Win32;
-using ProgressTrackingLibrary;
+using OOP2Projekt; // Zamijenjeno iz ProgressTrackingLibrary
 using UserProfileLibrary;
 using FontAwesome.Sharp;
 using OOP2Projekt;
