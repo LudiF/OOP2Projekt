@@ -20,6 +20,8 @@
             label3 = new System.Windows.Forms.Label();
             iconButtonCloseProgram = new FontAwesome.Sharp.IconButton();
             iconButtonUserProfile = new FontAwesome.Sharp.IconButton();
+            buttonTrackCalories = new System.Windows.Forms.Button();
+            buttonAddMeal = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)numericUpDownCalories).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBoxMeal).BeginInit();
             SuspendLayout();
@@ -48,13 +50,13 @@
             // 
             // buttonTrackProgress
             // 
-            buttonTrackProgress.Location = new System.Drawing.Point(10, 390);
+            buttonTrackProgress.Location = new System.Drawing.Point(10, 411);
             buttonTrackProgress.Name = "buttonTrackProgress";
             buttonTrackProgress.Size = new System.Drawing.Size(296, 26);
             buttonTrackProgress.TabIndex = 2;
             buttonTrackProgress.Text = "Track Weight Progress";
             buttonTrackProgress.UseVisualStyleBackColor = true;
-            buttonTrackProgress.Click += buttonTrackProgress_Click;
+            buttonTrackProgress.Click += buttonTrackProgress_Click_1;
             // 
             // richTextBoxMealPlan
             // 
@@ -157,11 +159,33 @@
             iconButtonUserProfile.UseVisualStyleBackColor = true;
             iconButtonUserProfile.Click += iconButtonUserProfile_Click;
             // 
+            // buttonTrackCalories
+            // 
+            buttonTrackCalories.Location = new System.Drawing.Point(12, 454);
+            buttonTrackCalories.Name = "buttonTrackCalories";
+            buttonTrackCalories.Size = new System.Drawing.Size(296, 26);
+            buttonTrackCalories.TabIndex = 18;
+            buttonTrackCalories.Text = "Track Calories";
+            buttonTrackCalories.UseVisualStyleBackColor = true;
+            buttonTrackCalories.Click += buttonTrackCalories_Click;
+            // 
+            // buttonAddMeal
+            // 
+            buttonAddMeal.Location = new System.Drawing.Point(10, 377);
+            buttonAddMeal.Name = "buttonAddMeal";
+            buttonAddMeal.Size = new System.Drawing.Size(296, 23);
+            buttonAddMeal.TabIndex = 19;
+            buttonAddMeal.Text = "Add Calories From Meal Plan";
+            buttonAddMeal.UseVisualStyleBackColor = true;
+            buttonAddMeal.Click += buttonAddMeal_Click;
+            // 
             // GlavnaForma
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             ClientSize = new System.Drawing.Size(1099, 556);
+            Controls.Add(buttonAddMeal);
+            Controls.Add(buttonTrackCalories);
             Controls.Add(iconButtonUserProfile);
             Controls.Add(iconButtonCloseProgram);
             Controls.Add(label3);
@@ -187,6 +211,7 @@
 
         #endregion
 
+
         private System.Windows.Forms.ComboBox comboBoxLanguage;
         private System.Windows.Forms.PictureBox pictureBoxUploadProfile;
         private FontAwesome.Sharp.IconButton iconButton1;
@@ -202,5 +227,7 @@
         private System.Windows.Forms.Label label3;
         private FontAwesome.Sharp.IconButton iconButtonCloseProgram;
         private FontAwesome.Sharp.IconButton iconButtonUserProfile;
+        private System.Windows.Forms.Button buttonTrackCalories;
+        private System.Windows.Forms.Button buttonAddMeal;
     }
 }

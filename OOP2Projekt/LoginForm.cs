@@ -90,6 +90,7 @@ namespace OOP2Projekt
             string password = textBoxLozinka.Text;
 
             int userId = GetUserIdFromDatabase(username); // Dobivanje userId-a iz baze podataka
+            
 
             if (userId == -1)
             {

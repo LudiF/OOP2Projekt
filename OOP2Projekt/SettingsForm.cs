@@ -110,5 +110,10 @@ namespace OOP2Projekt
         {
             this.Close(); // Zatvori formu bez spremanja
         }
+
+        private void SettingsForm_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }

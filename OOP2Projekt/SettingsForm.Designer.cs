@@ -147,6 +147,7 @@
             Controls.Add(comboBoxLanguage);
             Name = "SettingsForm";
             Text = "SettingsForm";
+            Load += SettingsForm_Load;
             ((System.ComponentModel.ISupportInitialize)numericUpDownWidth).EndInit();
             ((System.ComponentModel.ISupportInitialize)numericUpDownHeight).EndInit();
             ResumeLayout(false);
